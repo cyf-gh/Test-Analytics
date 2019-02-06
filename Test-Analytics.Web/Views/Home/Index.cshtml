@@ -1,0 +1,54 @@
+﻿
+@using Test_Analytics.Model;
+@model List<ProjectModel>;
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+    var max = @Model.Count + 1; // Default select + 1
+    function createNewProject() {
+        $.ajax({
+            url: '/project',
+            type: 'POST',
+            data: JSON.stringify({
+                Name: $('#project-name').val(),
+            }),
+            async: true,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (returndata) {
+                window.location.href = "/project?id=" + max;
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    }
+</script>
+
+<form>
+    <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+            <label for="static-project-select" class="col-form-label">Select Project</label>
+            <select onchange="selectProject()" id="idProjectSelect" class="form-control form-control-lg">
+                <option value="0" selected>--Please Select--</option>
+                @foreach( var project in Model ) {
+                    <option value=@project.Id>@project.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+</form>
+
+<form>
+    <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+            <label for="1">Name</label>
+            <input type="text" class="form-control" id="project-name" aria-describedby="newHelper" placeholder="Project Name">
+            <small id="newHelper" class="form-text text-muted">Enter a new project name and Click the Submit button.</small>
+
+            <button class="btn btn-primary" , onclick="createNewProject()">Submit</button>
+        </div>
+    </div>
+</form>

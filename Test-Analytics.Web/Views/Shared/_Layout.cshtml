@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<script type="text/javascript">
+    function selectProject() {
+        var id = $('#idProjectSelect option:selected').val();
+        if (id == 0) {
+            window.location.href = "/project/index";
+            return;
+        }
+        window.location.href = "/project?id=" + id;
+    }
+</script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+
+    <environment include="Development">
+        <link asp-href-include="css/bootstrap.css" asp-href-exclude="~/css/all.min.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link asp-href-include="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.css"
+              asp-fallback-href="~/css/all.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              rel="stylesheet" />
+    </environment>
+</head>
+
+<body>
+    <div class="container" style="padding-left:2rem; padding-bottom:1rem">
+        <div style="padding-top:1rem">
+
+            <a style=" float:right" href="https://github.com/cyf-gh/Test-Analytics" class="badge badge-info">View Source Code On Github!</a>
+        </div>
+        <h1>Test Analytics <span class="badge badge-secondary">v0.1.0</span></h1>
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+    <p class="mt-5 mb-3 text-muted text-center">&copy;cyf 2019</p>
+
+    <environment include="Development">
+        <script src="~/js/all.min.js"></script>
+        <script src="~/js/part.min.js"></script>
+        <script src="~/js/jquery.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/js/part.min.js"
+                asp-fallback-test="Window.jQuery"></script>
+    </environment>
+</body>
+</html>

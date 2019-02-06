@@ -1,0 +1,453 @@
+﻿@{ ViewData["Title"] = "Index";
+}
+
+@using Test_Analytics.Model;
+@model TestAnalyticsViewModel
+
+<script src="~/js/jquery.js"></script>
+<script src="~/js/Home/Edit.js"></script>
+
+@*------------------------ Capability Tab Template -------------------------*@
+<script type="text/html" id="template-tab-capability">
+    <div class="tab-pane" id="cap" role="tabpanel" aria-labelledby="about-project-tab">
+        <h4 id="lab">...</h4>
+        <div class="container" style="padding-top:1rem">
+            <div class="form-inline">
+                <div class="form-group mx-sm-3 mb-2" id="id-input-div">
+                    <label for="6" class="sr-only">Capability</label>
+                    <input type="text" class="form-control" id="project-capa" aria-describedby="Capability" placeholder="Project Capability">
+                </div>
+                <button class="btn btn-primary mb-2" onclick="createNewCapability(this)">Add</button>
+            </div>
+            <div id="id-capa-cards"></div>
+        </div>
+    </div>
+</script>
+@*------------------------ Attribute Template -------------------------*@
+<script type="text/html" id="template-card-attribute">
+    <div class="card">
+        <h5 id="attr-name" class="card-header" onclick="hideBody(this)"></h5>
+        <div class="card-body" hide="false">
+            <label for="1">Attribute</label>
+            <input type="text" class="form-control" id="attr-desc" aria-describedby="Attribute" placeholder="Desc here." value="">
+            <small id="Attribute" class="form-text text-muted">Attribute</small>
+            <label for="1">Tags</label>
+            <input type="text" class="form-control" id="attr-tags" aria-describedby="Tags" placeholder="Tags here." value="">
+            <small id="Tags" class="form-text text-muted">Seperate By ";"</small>
+
+            <input id="id-group-attr-checker" type="checkbox">
+            <label for="id-group-attr-checker">The tests performed for this attribute are sufficient to verify its operation.</label>
+        </div>
+        <button type="button" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</script>
+@*------------------------ Capability Card Template -------------------------*@
+<script type="text/html" id="template-card-capability">
+    <div id="id-capa-card" class="card">
+        <h5 id="capa-name" class="card-header" onclick="hideBody(this)"></h5>
+        <div class="card-body" hide="false">
+            <label for="1">Description</label>
+            <input type="text" class="form-control" id="capa-desc" aria-describedby="Capability" placeholder="Desc here." value="">
+            <label for="1">Tags</label>
+            <input type="text" class="form-control" id="capa-tags" aria-describedby="Tags" placeholder="Tags here." value="">
+            <small id="Tags" class="form-text text-muted">Seperate By ";"</small>
+            <div class="form-inline">
+                <legend class="col-form-label">Frequency of Failure</legend>
+                <div id="id-radios-type" class="col-sm-10">
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-fof" id="id-fofna" value="0" checked>
+                        <label class="form-check-inline-label" for="id-fofna">
+                            N/A
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-fof" id="id-fofrar" value="1">
+                        <label class="form-check-inline-label" for="id-fofrar">
+                            Rarely
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-fof" id="id-seld" value="2">
+                        <label class="form-check-inline-label" for="id-seld">
+                            Seldom
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-fof" id="id-occ" value="3">
+                        <label class="form-check-inline-label" for="id-occ">
+                            Occasionally
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-fof" id="id-often" value="4">
+                        <label class="form-check-inline-label" for="id-often">
+                            Often
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline">
+                <legend class="col-form-label">Impact</legend>
+                <div id="id-radios-type" class="col-sm-10">
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-impact" id="id-imp-na" value="0" checked>
+                        <label class="form-check-inline-label" for="id-imp-na">
+                            N/A
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-impact" id="id-mini" value="1">
+                        <label class="form-check-inline-label" for="id-mini">
+                            Minimal
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-impact" id="id-some" value="2">
+                        <label class="form-check-inline-label" for="id-some">
+                            Some
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-impact" id="id-cons" value="3">
+                        <label class="form-check-inline-label" for="id-cons">
+                            Considerable
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-inline-input" type="radio" name="name-impact" id="id-max" value="4">
+                        <label class="form-check-inline-label" for="id-max">
+                            Maximal
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="id-capa-btn" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</script>
+@*------------------------ Components Template -------------------------*@
+<script type="text/html" id="template-card-component">
+    <div id="id-card" class="card">
+        <h5 id="comp-name" class="card-header" onclick="hideBody(this)"></h5>
+        <div class="card-body" hide="false">
+            <label for="1">component</label>
+            <input type="text" class="form-control" id="comp-desc" aria-describedby="component" placeholder="Desc here." value="">
+            <small id="component" class="form-text text-muted">component</small>
+            <label for="1">Tags</label>
+            <input type="text" class="form-control" id="comp-tags" aria-describedby="Tags" placeholder="Tags here." value="">
+            <small id="Tags" class="form-text text-muted">Seperate By ";"</small>
+
+            <input id="id-group-comp-checker" type="checkbox">
+            <label title="Show Page Source" for="id-group-comp-checker">The tests performed for this component are sufficient to verify its operation.</label>
+        </div>
+        <button type="button" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</script>
+
+<div class="form-inline">
+    <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+            <h5 for="" class="col-form-label">Select Project</h5>
+            <select onchange="selectProject()" id="idProjectSelect" class="form-control">
+                <option value="0">--Create New Project--</option>
+                @foreach( var project in Model.Projects ) {
+                    if( project == Model.Project ) {
+                        <option value=@project.Id selected>@project.Name</option>
+                        continue;
+                    }
+                    <option value=@project.Id>@project.Name</option>
+                }
+            </select>
+            <button class="btn btn-primary" , onclick="saveAll()">Save</button>
+        </div>
+    </div>
+</div>
+<hr>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link show active" id="project-tab" data-toggle="tab" href="#about-project" role="tab" aria-controls="about-project" aria-selected="true">About Project</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="attributes-tab" data-toggle="tab" href="#attributes" role="tab" aria-controls="attributes" aria-selected="false">Attributes</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="components-tab" data-toggle="tab" href="#components" role="tab" aria-controls="components" aria-selected="false">Components</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="capabilities-tab" onclick="genarateCapaTable()" data-toggle="tab" href="#capabilities" role="tab" aria-controls="capabilities" aria-selected="false">Capabilities</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="risk-tab" onclick="genarateRiskTable()" data-toggle="tab" href="#risk" role="tab" aria-controls="risk" aria-selected="false">Risk Overview</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    @*------------------------------------ About Project ------------------------------------*@
+    <div class="tab-pane active" id="about-project" role="tabpanel" aria-labelledby="about-project-tab">
+        <div class="container" style="padding-top:1rem">
+            <div id="id-meta-info" project-id=@Model.Project.Id hidden></div>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Basics</h4>
+                <p>Theses details help identify your project.</p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <label for="1">Name</label>
+            <input type="text" class="form-control" id="project-name" aria-describedby="newHelper" placeholder="Project Name" value=@Model.Project.Name>
+
+            <label for="3">Project Description</label>
+            <input type="text" class="form-control" id="project-desc" aria-describedby="Description" placeholder="Project Description" @Model.Project.Description>
+            <hr>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Sharing</h4>
+                <p>Setting a project's accessibility will determine who has access to view and update your Project. Owners have access to delete a project or mark it public; editors can update anything else.</p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <label for="2">Project Owners</label>
+            <input disabled type="text" class="form-control" id="project-owners" aria-describedby="Owners" placeholder="Project Owners" @Model.Project.Owners>
+            <small id="Owners" class="form-text text-muted">comma-separated list of email addresses</small>
+
+            <label for="4">Project Editors</label>
+            <input disabled type="text" class="form-control" id="project-editors" aria-describedby="Editors" placeholder="Project Editors" @Model.Project.Editors>
+            <small id="Editors" class="form-text text-muted">comma-separated list of email addresses</small>
+
+            <label for="5">Project Viewers</label>
+            <input disabled type="text" class="form-control" id="project-viewers" aria-describedby="Viewers" placeholder="Project Viewers" @Model.Project.Viewers>
+            <small id="Viewers" class="form-text text-muted">comma-separated list of email addresses</small>
+
+            <label for="5">Public access</label>
+            <input disabled type="checkbox" class="form-check-inline-input" id="project-is-public" checked=@Model.Project.IsPublic>
+            <label class="form-check-inline-label" for="project-is-public">Make project Public. If public, anyone on the Internet can see a public project. its full ACC model, and any uploaded information such as Bugs or Checkins.</label>
+
+            <hr>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Delete Project</h4>
+                <p>Delete this application. Only project owners have this ability. This operation cannot be undone!</p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <button class="btn btn-danger mb-2" onclick="deleteProject()">Delete Project</button>
+
+        </div>
+    </div>
+    @*------------------------------------ About Project ------------------------------------*@
+
+    @*------------------------------------ Attribute ------------------------------------*@
+    <div class="tab-pane" id="attributes" role="tabpanel" aria-labelledby="attributes-tab">
+        <div class="container" style="padding-top:1rem">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Attributes</h4>
+                <p>Attributes are ways a marketer would describle your application, such as "Fast" or "Secure". Attributes in the ACC model allow you to map Capabilities to business requirements.</p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <div class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="6" class="sr-only">Add a new attribute</label>
+                    <input type="text" class="form-control" id="project-attr" aria-describedby="Attribute" placeholder="Add a new attribute">
+                </div>
+                <button class="btn btn-primary mb-2" onclick="createNewAttribute()">Add</button>
+            </div>
+            <div id="img-card-group-attr">
+                @foreach( var attr in Model.Attributes ) {
+                    <div class="card">
+                        <h5 id="id-group-attr-name" class="card-header" onclick="hideBody(this)">@attr.Name</h5>
+                        <div class="card-body" hide="false">
+                            <label for="1">Description here</label>
+                            <input type="text" class="form-control" id="id-group-attr-desc" aria-describedby="Attribute" placeholder="Add a new attribute" value="@attr.Description">
+                            <label for="1">Tags</label>
+                            <input type="text" class="form-control" id="id-group-attr-tags" aria-describedby="Tags" placeholder="Tags here." value="@attr.Tags">
+                            <small id="Tags" class="form-text text-muted">Seperate by ";"</small>
+
+                            <input id="id-group-attr-checker" type="checkbox" asp-for="@attr.ValidOperation">
+                            <label for="id-group-attr-checker">The tests performed for this attribute are sufficient to verify its operation.</label>
+                        </div>
+                        <button type="button" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @*------------------------------------ Attribute ------------------------------------*@
+
+
+
+    @* ------------------------------------ Component ------------------------------------*@
+    <div class="tab-pane" id="components" role="tabpanel" aria-labelledby="components-tab">
+        <div class="container" style="padding-top:1rem">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Components</h4>
+                <p>
+                    Components are the 'moving parts' of your application. Typically components are core libraries, data sources, parts of the code base, and so on.
+                </p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <div class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="7" class="sr-only">Component</label>
+                    <input type="text" class="form-control" id="project-comp" aria-describedby="Component" placeholder="Add a new component.">
+                </div>
+                <button class="btn btn-primary mb-2" , onclick="createNewComponent()">Add</button>
+            </div>
+            <div id="img-card-group-comp">
+                @foreach( var comp in Model.Components ) {
+                    <div id="id-card" class="card">
+                        <h5 id="id-group-comp-name" class="card-header" onclick="hideBody(this)">@comp.Name</h5>
+                        <div class="card-body" hide="false">
+                            <label for="1">Description</label>
+                            <input type="text" class="form-control" id="id-group-comp-desc" aria-describedby="component" placeholder="Desc here." value=@comp.Description>
+                            <small id="component" class="form-text text-muted">component</small>
+                            <label for="1">Tags</label>
+                            <input type="text" class="form-control" id="id-group-comp-tags" aria-describedby="Tags" placeholder="Tags here." value=@comp.Tags>
+                            <small id="Tags" class="form-text text-muted">Seperate By ";"</small>
+
+                            <input id="id-group-comp-checker" type="checkbox" asp-for="@comp.ValidOperation">
+                            <label title="Show Page Source" for="id-group-comp-checker">The tests performed for this component are sufficient to verify its operation.</label>
+                        </div>
+                        <button type="button" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @*------------------------------------ Component ------------------------------------*@
+
+
+
+    @*------------------------------------ Capability ------------------------------------*@
+    <div class="tab-pane" id="capabilities" role="tabpanel" aria-labelledby="capabilities-tab">
+
+        <div class="container" style="padding-top:1rem">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Capabilities</h4>
+                <p>
+                    Capabilities are what your application actually does; they are just like features, except they are tied to a specific Attribute and Component pair.
+                </p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <h4>Capabilities by Attribute and Component</h4>
+            <table class="table table-bordered" id="id-capa-tabel">
+                <thead><tr></tr></thead>
+                <tbody id="id-capa-body"></tbody>
+            </table>
+            <div class="tab-content" id="id-capability-tabs">
+                @foreach( var attr in Model.Attributes ) {
+                    @foreach( var comp in Model.Components ) {
+                        string ca = comp.Name + attr.Name;
+                        string CIsA = comp.Name + " is " + attr.Name;
+                        <div class="tab-pane" id="@ca" role="tabpanel" aria-labelledby="about-project-tab">
+                            <h4 id="lab">@CIsA</h4>
+                            <div class="container" style="padding-top:1rem">
+                                <div class="form-inline">
+                                    <div class="form-group mx-sm-3 mb-2" id="id-input-div">
+                                        <label for="6" class="sr-only">Capability</label>
+                                        <input type="text" class="form-control" id="project-capa" aria-describedby="Capability" placeholder="Project Capability">
+                                    </div>
+                                    <button class="btn btn-primary mb-2" onclick="createNewCapability(this)">Add</button>
+                                </div>
+                                <div id="id-capa-cards">
+
+                                    @foreach( var capa in Model.Capabilities.FindAll( c => { return c.Attribute == attr && c.Component == comp; } ) ) {
+                                        <div id="id-capa-card" class="card">
+                                            <h5 id="capa-name" attr="@capa.Attribute.Name" comp="@capa.Component.Name" class="card-header" onclick="hideBody(this)">@capa.Name</h5>
+                                            <div class="card-body" hide="false">
+                                                <label for="1">Description</label>
+                                                <input type="text" class="form-control" id="capa-desc" aria-describedby="Capability" placeholder="Desc here." value="@capa.Description">
+                                                <label for="1">Tags</label>
+                                                <input type="text" class="form-control" id="capa-tags" aria-describedby="Tags" placeholder="Tags here." value="@capa.Tags">
+                                                <small id="Tags" class="form-text text-muted">Seperate By ";"</small>
+                                                <div class="form-inline">
+                                                    <legend class="col-form-label">Frequency of Failure</legend>
+                                                    <div id="id-radios-type" class="col-sm-10">
+                                                        <div class="form-check-inline">
+                                                            @foreach( FrequencyOfFailure fof in Enum.GetValues( typeof( FrequencyOfFailure ) ) ) {
+                                                                string inputId = Guid.NewGuid().ToString();
+                                                                string inputName = "name-fof" + capa.Name;
+                                                                int val = (int)fof;
+                                                                <div class="form-check-inline">
+                                                                    @if( fof == capa.FrequencyOfFailure ) {
+                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val" checked>
+                                                                    } else {
+                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val">
+                                                                    }
+                                                                    <label class="form-check-inline-label" for=@inputId>
+                                                                        @fof.ToString()
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-inline">
+                                                        <legend class="col-form-label">Impact</legend>
+                                                        <div id="id-radios-type" class="col-sm-10">
+                                                            @foreach( Impact im in Enum.GetValues( typeof( Impact ) ) ) {
+                                                                string inputId = Guid.NewGuid().ToString();
+                                                                string inputName = "name-impact" + capa.Name;
+                                                                int val = (int)im;
+                                                                <div class="form-check-inline">
+                                                                    @if( im == capa.Impact ) {
+                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val" checked>
+                                                                    } else {
+                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val">
+                                                                    }
+                                                                    <label class="form-check-inline-label" for=@inputId>
+                                                                        @im.ToString()
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" id="id-capa-btn" class="ml-2 mb-1 close" onclick="removeCard(this)" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        @*------------------------------------ Capability ------------------------------------*@
+
+    </div>
+
+    @*------------------------------------ Risk ------------------------------------*@
+    <div class="tab-pane" id="risk" role="tabpanel" aria-labelledby="risk-tab">
+        <div class="container" style="padding-top:1rem">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Known Risk</h4>
+                <p>
+                    This shows the Total Risk to your application.
+                </p>
+                <hr>
+                <a class="mb-0" href="project/learn-more">Learn more</a>
+            </div>
+            <h4 class="alert-heading">Risk displayed by Atribute and Component</h4>
+            <table class="table table-bordered">
+                <thead><tr></tr></thead>
+                <tbody id="id-risk-body"></tbody>
+            </table>
+        </div>
+        <button class="btn btn-primary mb-2" onclick="downloadRisk()">Download as Excel</button>
+    </div>
+    @*------------------------------------ Risk ------------------------------------*@
+
+</div>
