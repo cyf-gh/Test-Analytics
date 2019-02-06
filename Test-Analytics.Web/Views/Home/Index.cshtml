@@ -7,7 +7,7 @@
 <script type="text/javascript">
     var max = @Model.Count + 1; // Default select + 1
     function createNewProject() {
-        $.ajax({
+        jQuery.ajax({
             url: '/project',
             type: 'POST',
             data: JSON.stringify({

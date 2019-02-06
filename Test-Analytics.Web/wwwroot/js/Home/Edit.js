@@ -60,7 +60,7 @@ function saveCapas() {
         capas[i] = capa;
     });
     console.log(capas);
-    $.ajax({
+    jQuery.ajax({
         url: '/project/save-project-capas',
         type: 'POST',
         data: JSON.stringify(capas),
@@ -74,7 +74,7 @@ function saveCapas() {
 }
 
 function saveProject() {
-    $.ajax({
+    jQuery.ajax({
         url: '/project/save-project',
         type: 'POST',
         data: JSON.stringify({
@@ -112,7 +112,7 @@ function saveAttrs() {
         attrs[i] = attr;
     });
     console.log(attrs);
-    $.ajax({
+    jQuery.ajax({
         url: '/project/save-project-attrs',
         type: 'POST',
         data: JSON.stringify(attrs),
@@ -142,7 +142,7 @@ function saveComps() {
         comps[i] = comp;
     });
     console.log(comps);
-    $.ajax({
+    jQuery.ajax({
         url: '/project/save-project-comps',
         type: 'POST',
         data: JSON.stringify(comps),
@@ -156,7 +156,7 @@ function saveComps() {
 }
 
 function pushSave() {
-    $.ajax({
+    jQuery.ajax({
         url: '/project/push-save',
         type: 'POST',
         async: false,
@@ -177,7 +177,7 @@ function saveAll() {
 function deleteProject() {
     if (confirm("Are you sure to delete current project?")) {
         if (confirm("Confirm again.")) {
-            $.ajax({
+            jQuery.ajax({
                 url: '/project/delete-project',
                 type: 'POST',
                 data: JSON.stringify({
@@ -292,7 +292,7 @@ function genarateCapaTable() {
     }
 }
 function downloadRisk() {
-    $.ajax({
+    jQuery.ajax({
         url: '/project/make-risktable-xls',
         type: 'POST',
         data: JSON.stringify({
@@ -419,7 +419,7 @@ function removeCard(dom) {
 }
 
 function EditProject() {
-    $.ajax({
+    jQuery.ajax({
         url: '@Url.Action("ModifyProject")',
         type: 'POST',
         data: JSON.stringify({
