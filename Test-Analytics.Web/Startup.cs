@@ -40,6 +40,11 @@ namespace Test_Analytics.Web {
                 app.UseExceptionHandler( "/Error" );
                 app.UseHsts();
             }
+            if( env.IsProduction() ) {
+                app.UseForwardedHeaders( new ForwardedHeadersOptions {
+                    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+                } );
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles( new StaticFileOptions {
@@ -47,7 +52,6 @@ namespace Test_Analytics.Web {
             } );
 
             app.UseAuthentication();
-
             app.UseMvc( routes => {
                 routes.MapRoute(
                     name: "default",
