@@ -2,10 +2,7 @@
 @using Test_Analytics.Model;
 @model List<ProjectModel>;
 
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script src=""></script>
 <script type="text/javascript">
-    var max = @Model.Count + 1; // Default select + 1
     function createNewProject() {
         jQuery.ajax({
             url: '/project',
@@ -13,21 +10,29 @@
             data: JSON.stringify({
                 Name: $('#project-name').val(),
             }),
-            async: true,
+            async: false,
             cache: false,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (returndata) {
-                window.location.href = "/project?id=" + max;
+                directTo();
             },
             error: function (returndata) {
-                alert(returndata);
+                directTo();
             }
         });
     }
+
+    var max = @Model.Last().Id + 1; // Default select + 1
+
+    function directTo() {
+        var project = "/project?id=" + max.toString();
+        console.log(project);
+        window.location.href = project;
+    }
 </script>
 
-<form>
+<div>
     <div class="form-row align-items-center">
         <div class="col-auto my-1">
             <label for="static-project-select" class="col-form-label">Select Project</label>
@@ -39,9 +44,9 @@
             </select>
         </div>
     </div>
-</form>
+</div>
 
-<form>
+<div>
     <div class="form-row align-items-center">
         <div class="col-auto my-1">
             <label for="1">Name</label>
@@ -51,4 +56,4 @@
             <button class="btn btn-primary" , onclick="createNewProject()">Submit</button>
         </div>
     </div>
-</form>
+</div>

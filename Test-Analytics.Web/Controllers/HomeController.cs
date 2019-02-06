@@ -67,7 +67,7 @@ namespace Test_Analytics.Web.Controllers {
                 await _TestAnalyticsService.ProjectSet()
                     .AddAsync( Utils.GetObjectFromJsonInRequest<ProjectModel>( Request ) );
                 await _TestAnalyticsService.SaveAsync();
-                return Json( await _TestAnalyticsService.GetProjectsAsync() );
+                return Json( "Ok" );
             } catch( System.Exception ) {
                 return BadRequest();
             }
