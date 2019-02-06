@@ -61,11 +61,4 @@ Modify the listening IP.
 /project/download-risktable-xls #download xls file.
 ```
  
- 
-## Quotes
-### Font
-Bootstrap; JQuery
-### End
-EF Core SQLite; Asp.Net Core
-
 Good Luck!
