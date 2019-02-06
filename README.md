@@ -37,6 +37,9 @@ Modify the listening IP.
 [base route]
 /project
 
+[edit a project]
+/project?id=#
+
 [goto index page]
 /project/index
 
@@ -57,8 +60,8 @@ Modify the listening IP.
 }
 
 [download xls risk table]
-/project/make-risktable-xls     #which will make a xls file on remote server.
-/project/download-risktable-xls #download xls file.
+/project/make-risktable-xls               #which will make a xls file on remote server.
+/project/download-risktable-xls?file=#    #download xls file.(file:file name. Eg: projectname_Risk.xls)
 ```
  
 Good Luck!
