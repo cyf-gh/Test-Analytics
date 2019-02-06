@@ -1,10 +1,10 @@
 [
-  // css
+  //css
   {
     "outputFileName": "wwwroot/css/all.min.css",
     "inputFiles": [
-      "wwwroot/css/site.css",
-      "node_modules/bootstrap/dist/css/bootstrap.css"
+      "node_modules/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/css/site.css"
     ]
   },
   {
@@ -16,12 +16,12 @@
       "enabled": false
     }
   },
-  // js
+  //js
   {
     "outputFileName": "wwwroot/js/all.min.js",
     "inputFiles": [
       "node_modules/jquery-slim/dist/jquery.slim.js",
-      "node_modules/popper.js/dist/js/popper.js",
+      "node_modules/popper.js/dist/wnd/popper.js",
       "node_modules/bootstrap/dist/js/bootstrap.js",
       "wwwroot/js/site.js"
     ],
@@ -35,7 +35,7 @@
     "outputFileName": "wwwroot/js/vendor.js",
     "inputFiles": [
       "node_modules/jquery-slim/dist/jquery.slim.js",
-      "node_modules/popper.js/dist/js/popper.js",
+      "node_modules/popper.js/dist/wnd/popper.js",
       "node_modules/bootstrap/dist/js/bootstrap.js"
     ],
     "minify": {
