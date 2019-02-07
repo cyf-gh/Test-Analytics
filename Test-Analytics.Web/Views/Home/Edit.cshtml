@@ -378,9 +378,9 @@
                                                                 int val = (int)fof;
                                                                 <div class="form-check-inline">
                                                                     @if( fof == capa.FrequencyOfFailure ) {
-                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val" checked>
+                                                                        <input class="form-check-inline-input" type="radio" name="@inputName" id=@inputId value="@val" checked>
                                                                     } else {
-                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val">
+                                                                        <input class="form-check-inline-input" type="radio" name="@inputName" id=@inputId value="@val">
                                                                     }
                                                                     <label class="form-check-inline-label" for=@inputId>
                                                                         @fof.ToString()
@@ -398,9 +398,9 @@
                                                                 int val = (int)im;
                                                                 <div class="form-check-inline">
                                                                     @if( im == capa.Impact ) {
-                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val" checked>
+                                                                        <input class="form-check-inline-input" type="radio" name="@inputName" id=@inputId value="@val" checked>
                                                                     } else {
-                                                                        <input class="form-check-inline-input" type="radio" name=@inputName id=@inputId value="@val">
+                                                                        <input class="form-check-inline-input" type="radio" name="@inputName" id=@inputId value="@val">
                                                                     }
                                                                     <label class="form-check-inline-label" for=@inputId>
                                                                         @im.ToString()

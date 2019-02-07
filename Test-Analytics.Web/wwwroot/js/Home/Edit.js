@@ -37,27 +37,31 @@ function Dictionary() {
 
 function saveCapas() {
     var capas = new Array();
-    $("#id-capa-cards").children("div").each(function (i) {
-        var capaName = $(this).children("h5").text();
-        var capaDesc = $(this).children("div[class=card-body]").children("input[id=capa-desc]").val();
-        var capafof = $(this).children("div[class=card-body]").find("input[name=name-fof" + capaName + "]:checked").val();
-        var capaImpact = $(this).children("div[class=card-body]").find("input[name=name-impact" + capaName + "]:checked").val();
-        var capaTags = $(this).children("div[class=card-body]").children("input[id=capa-tags]").val();
+    var t = 0;
+    $("div[id=id-capa-cards]").each(function (iii) {
+        $(this).children("div").each(function (ii) {
+            var capaName = $(this).children("h5").text();
+            var capaDesc = $(this).children("div[class=card-body]").children("input[id=capa-desc]").val();
+            var capafof = $(this).children("div[class=card-body]").find("input[name='name-fof" + capaName + "']:checked").val();
+            var capaImpact = $(this).children("div[class=card-body]").find("input[name='name-impact" + capaName + "']:checked").val();
+            var capaTags = $(this).children("div[class=card-body]").children("input[id=capa-tags]").val();
 
-        var capaAttr = $(this).children("h5").attr("attr");
-        var capaComp = $(this).children("h5").attr("comp");
+            var capaAttr = $(this).children("h5").attr("attr");
+            var capaComp = $(this).children("h5").attr("comp");
 
-        var capa = {
-            ProjectId: $('div[id=id-meta-info]').attr("project-id"),
-            Tags: capaTags,
-            Name: capaName,
-            Desc: capaDesc,
-            FoF: capafof,
-            Impact: capaImpact,
-            Attr: capaAttr,
-            Comp: capaComp
-        };
-        capas[i] = capa;
+            var capa = {
+                ProjectId: $('div[id=id-meta-info]').attr("project-id"),
+                Tags: capaTags,
+                Name: capaName,
+                Desc: capaDesc,
+                FoF: capafof,
+                Impact: capaImpact,
+                Attr: capaAttr,
+                Comp: capaComp
+            };
+            capas[t] = capa;
+            t++;
+        });
     });
     console.log(capas);
     jQuery.ajax({
@@ -351,8 +355,8 @@ function genarateRiskTable() {
                             taAttributesName.data[j] == $(this).children("h5").attr("attr")) {
                             showString = name;
                             totalrisk =
-                                parseInt($(this).children("div[class=card-body]").find("input[name=name-fof" + name + "]:checked").val()) +
-                                parseInt($(this).children("div[class=card-body]").find("input[name=name-impact" + name + "]:checked").val());
+                                parseInt($(this).children("div[class=card-body]").find("input[name='name-fof" + name + "']:checked").val()) +
+                                parseInt($(this).children("div[class=card-body]").find("input[name='name-impact" + name + "']:checked").val());
                             $("#id-risk-body").children("tr").eq(i).children("td").eq(j).append("<div>" + (ii + 1).toString() + " - " + showString + "<div>");
                             $("#id-risk-body").children("tr").eq(i).children("td").eq(j).children("div").eq(ii).attr("style", "background:" + redColor[8 - totalrisk]);
                             // <tr><td>
