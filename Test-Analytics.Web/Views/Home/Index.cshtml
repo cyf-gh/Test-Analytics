@@ -15,18 +15,16 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (returndata) {
-                directTo();
+                directTo(returndata);
             },
             error: function (returndata) {
-                directTo();
+                directTo(returndata);
             }
         });
     }
 
-    var max = @Model.Last().Id + 1; // Default select + 1
-
-    function directTo() {
-        var project = "/project?id=" + max.toString();
+    function directTo(id) {
+        var project = "/project?id=" + id.toString();
         console.log(project);
         window.location.href = project;
     }

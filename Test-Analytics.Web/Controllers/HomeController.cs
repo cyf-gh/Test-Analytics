@@ -64,10 +64,12 @@ namespace Test_Analytics.Web.Controllers {
         [HttpPost]
         public async Task<IActionResult> CreateProject() {
             try {
+                var project = Utils.GetObjectFromJsonInRequest<ProjectModel>( Request );
                 await _TestAnalyticsService.ProjectSet()
-                    .AddAsync( Utils.GetObjectFromJsonInRequest<ProjectModel>( Request ) );
+                    .AddAsync( project );
                 await _TestAnalyticsService.SaveAsync();
-                return Json( "Ok" );
+                var newp = ( await _TestAnalyticsService.GetProjectsAsync() ).Find( p=>{ return p.Name == project.Name; } );
+                return Json( newp.Id );
             } catch( System.Exception ) {
                 return BadRequest();
             }

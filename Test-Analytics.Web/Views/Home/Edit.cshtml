@@ -361,7 +361,7 @@
 
                                     @foreach( var capa in Model.Capabilities.FindAll( c => { return c.Attribute == attr && c.Component == comp; } ) ) {
                                         <div id="id-capa-card" class="card">
-                                            <h5 id="capa-name" attr="@capa.Attribute.Name" comp="@capa.Component.Name" class="card-header" onclick="hideBody(this)">@capa.Name</h5>
+                                            <h5 id="id-group-capa-name" attr="@capa.Attribute.Name" comp="@capa.Component.Name" class="card-header" onclick="hideBody(this)">@capa.Name</h5>
                                             <div class="card-body" hide="false">
                                                 <label for="1">Description</label>
                                                 <input type="text" class="form-control" id="capa-desc" aria-describedby="Capability" placeholder="Desc here." value="@capa.Description">

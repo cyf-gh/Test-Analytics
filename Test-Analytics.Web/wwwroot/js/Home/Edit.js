@@ -343,18 +343,21 @@ function genarateRiskTable() {
                 var totalrisk = 0;
                 var showString = "";
                 $("#id-risk-body").children("tr").eq(i).append("<td></td>");
-                $("#id-capa-cards").children("div").each(function (ii) {
-                    var name = $(this).children("h5").text();
-                    if (taComponentsName.data[i] == $(this).children("h5").attr("comp") &&
-                        taAttributesName.data[j] == $(this).children("h5").attr("attr")) {
-                        showString = name;
-                        totalrisk =
-                            parseInt($(this).children("div[class=card-body]").find("input[name=name-fof" + name + "]:checked").val()) +
-                            parseInt($(this).children("div[class=card-body]").find("input[name=name-impact" + name + "]:checked").val());
-                        $("#id-risk-body tr td").eq(j).append("<div>" + (ii+1).toString() + " - "+ showString + "<div>");
-                        $("#id-risk-body tr td").eq(j).children("div").eq(ii).attr("style", "background:" + redColor[8 - totalrisk]);
-                        // <tr><td>
-                    }
+                
+                $("div[id=id-capa-cards]").each(function (iii) {
+                    $(this).children("div").each(function (ii) {
+                        var name = $(this).children("h5").text();
+                        if (taComponentsName.data[i] == $(this).children("h5").attr("comp") &&
+                            taAttributesName.data[j] == $(this).children("h5").attr("attr")) {
+                            showString = name;
+                            totalrisk =
+                                parseInt($(this).children("div[class=card-body]").find("input[name=name-fof" + name + "]:checked").val()) +
+                                parseInt($(this).children("div[class=card-body]").find("input[name=name-impact" + name + "]:checked").val());
+                            $("#id-risk-body").children("tr").eq(i).children("td").eq(j).append("<div>" + (ii + 1).toString() + " - " + showString + "<div>");
+                            $("#id-risk-body").children("tr").eq(i).children("td").eq(j).children("div").eq(ii).attr("style", "background:" + redColor[8 - totalrisk]);
+                            // <tr><td>
+                        }
+                    });
                 });
             }
         }
