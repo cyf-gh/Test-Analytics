@@ -198,10 +198,10 @@
                 <a class="mb-0" href="project/learn-more">Learn more</a>
             </div>
             <label for="1">Name</label>
-            <input type="text" class="form-control" id="project-name" aria-describedby="newHelper" placeholder="Project Name" value=@Model.Project.Name>
+            <input type="text" class="form-control" id="project-name" aria-describedby="newHelper" placeholder="Project Name" value="@Model.Project.Name">
 
             <label for="3">Project Description</label>
-            <input type="text" class="form-control" id="project-desc" aria-describedby="Description" placeholder="Project Description" @Model.Project.Description>
+            <input type="text" class="form-control" id="project-desc" aria-describedby="Description" placeholder="Project Description" value="@Model.Project.Description">
             <hr>
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Sharing</h4>
@@ -210,15 +210,15 @@
                 <a class="mb-0" href="project/learn-more">Learn more</a>
             </div>
             <label for="2">Project Owners</label>
-            <input disabled type="text" class="form-control" id="project-owners" aria-describedby="Owners" placeholder="Project Owners" @Model.Project.Owners>
+            <input disabled type="text" class="form-control" id="project-owners" aria-describedby="Owners" placeholder="Project Owners" value="@Model.Project.Owners">
             <small id="Owners" class="form-text text-muted">comma-separated list of email addresses</small>
 
             <label for="4">Project Editors</label>
-            <input disabled type="text" class="form-control" id="project-editors" aria-describedby="Editors" placeholder="Project Editors" @Model.Project.Editors>
+            <input disabled type="text" class="form-control" id="project-editors" aria-describedby="Editors" placeholder="Project Editors" value="@Model.Project.Editors">
             <small id="Editors" class="form-text text-muted">comma-separated list of email addresses</small>
 
             <label for="5">Project Viewers</label>
-            <input disabled type="text" class="form-control" id="project-viewers" aria-describedby="Viewers" placeholder="Project Viewers" @Model.Project.Viewers>
+            <input disabled type="text" class="form-control" id="project-viewers" aria-describedby="Viewers" placeholder="Project Viewers" value="@Model.Project.Viewers">
             <small id="Viewers" class="form-text text-muted">comma-separated list of email addresses</small>
 
             <label for="5">Public access</label>
