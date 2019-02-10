@@ -15,7 +15,7 @@ Due to the lack of Authorization, features below might come later.
 * Make project public( not support )
 * locate features( English only )
 
-## Building
+## Building 
 Firstly, you need to add some nuget package reference.
 ```
 $dotnet add package BuildBundlerMinifier
@@ -23,6 +23,8 @@ $dotnet add package Serilog
 $dotnet add package Serilog.Console
 $dotnet add package Serilog.File
 ```
+[Dependency details](https://github.com/cyf-gh/Test-Analytics/network/dependencies)
+
 Modify the listening IP.
 ```
 #launchSettings.json
